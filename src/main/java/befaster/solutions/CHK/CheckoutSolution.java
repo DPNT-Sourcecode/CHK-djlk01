@@ -19,11 +19,11 @@ public class CheckoutSolution {
             }};
     private static final Map<Character, List<SpecialOffer>> SPECIAL_OFFERS =
             Map.of('A', Arrays.asList(
-                            new SpecialOffer(5, 200),
-                            new SpecialOffer(3, 130)
+                            new SpecialOffer(5, 200, '\0'),
+                            new SpecialOffer(3, 130, '\0')
                     ),
                     'B', Arrays.asList(
-                            new SpecialOffer(2, 45)
+                            new SpecialOffer(2, 45, '\0')
                     ),
                     'E', Arrays.asList(new SpecialOffer(2,0,'B')));
 
@@ -45,42 +45,48 @@ public class CheckoutSolution {
                     .count());
         }
 
-        for (Character product : SPECIAL_OFFERS.keySet()) {
-            var offers = SPECIAL_OFFERS.get(product);
-            offers.sort((o1, o2) -> Integer.compare(o2.quantity(), o1.quantity()));
-            for (SpecialOffer offer : offers) {
-                applyBundleOffers(items, offer);
-                total += applyDirectDiscounts(items, offer, product);
-            }
-        }
+        for(Map.Entry<Character, Integer> itemCountEntry : items.entrySet()){
+            var item = itemCountEntry.getKey();
+            var count = itemCountEntry.getValue();
 
-        for (Map.Entry<Character, Integer> item : items.entrySet()) {
-            total += item.getValue() * SKU_PRICES.get(item.getKey());
+            total += count * SKU_PRICES.get(item);
+
+            var offersForItem = SPECIAL_OFFERS.get(item);
+
+            for (SpecialOffer offer : offersForItem) {
+//                if(offer.freeItem() == null){
+//                    total-= applyDirectDiscounts(count, offer,item);
+//                } else {
+//                    total -= applyBundleOffers(item, items, offer);
+//
+//                }
+                total-= applyDirectDiscounts(count, offer,item);
+                total -= applyBundleOffers(item, items, offer);
+            }
         }
 
         return total;
     }
 
-    private static int applyDirectDiscounts(int count, SpecialOffer offer) {
+    private static int applyDirectDiscounts(int count, SpecialOffer offer, char product) {
         var offerCount = count / offer.quantity();
-        var regularPriceForOfferedItems = offerCount * offer.quantity() * SKU_PRICES.get(offer.product());
-        if (offer.quantity() > 0) {
-            var numDiscounts = items.get(product) / offer.quantity();
-            discount += numDiscounts * offer.price();
-            items.put(product, items.get(product) - numDiscounts * offer.quantity());
-        }
-        return discount;
+        var regularPriceForOfferedItems = offerCount * offer.quantity() * SKU_PRICES.get(product);
+        return regularPriceForOfferedItems - (offerCount * offer.price());
     }
 
-    private static void applyBundleOffers(Map<Character, Integer> items, SpecialOffer offer) {
-        if (offer.freeItem() != null) {
-            var freeItem = offer.freeItem();
-            var freeItemsAvailable = items.getOrDefault(freeItem, 0);
-            var remainingItemsToChargeFor = Math.max(0 ,items.getOrDefault(freeItem, 0) - freeItemsAvailable);
-            items.put(freeItem, remainingItemsToChargeFor);
-        }
+    private static int applyBundleOffers(char product, Map<Character, Integer> items, SpecialOffer offer) {
+//        if (offer.freeItem() != null) {
+//            var freeItem = offer.freeItem();
+//            var freeItemsAvailable = items.getOrDefault(freeItem, 0);
+//            var remainingItemsToChargeFor = Math.max(0 ,items.getOrDefault(freeItem, 0) - freeItemsAvailable);
+//            items.put(freeItem, remainingItemsToChargeFor);
+//        }
+        var numFreeItems = items.get(product) / offer.quantity();
+
+        return numFreeItems * SKU_PRICES.get(offer.freeItem());
     }
 }
+
 
 
 
