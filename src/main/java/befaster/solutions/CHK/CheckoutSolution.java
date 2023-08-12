@@ -19,11 +19,11 @@ public class CheckoutSolution {
             }};
     private static final Map<Character, List<SpecialOffer>> SPECIAL_OFFERS =
             Map.of('A', Arrays.asList(
-                            new SpecialOffer(5, 200, '\0'),
-                            new SpecialOffer(3, 130, '\0')
+                            new SpecialOffer(5, 200, null),
+                            new SpecialOffer(3, 130, null)
                     ),
                     'B', Arrays.asList(
-                            new SpecialOffer(2, 45, '\0')
+                            new SpecialOffer(2, 45, null)
                     ),
                     'E', Arrays.asList(new SpecialOffer(2,0,'B')));
 
@@ -54,14 +54,14 @@ public class CheckoutSolution {
             var offersForItem = SPECIAL_OFFERS.get(item);
 
             for (SpecialOffer offer : offersForItem) {
-//                if(offer.freeItem() == null){
-//                    total-= applyDirectDiscounts(count, offer,item);
-//                } else {
-//                    total -= applyBundleOffers(item, items, offer);
-//
-//                }
-                total-= applyDirectDiscounts(count, offer,item);
-                total -= applyBundleOffers(item, items, offer);
+                if(offer.freeItem() == null){
+                    total-= applyDirectDiscounts(count, offer,item);
+                } else {
+                    total -= applyBundleOffers(item, items, offer);
+
+                }
+//                total-= applyDirectDiscounts(count, offer,item);
+//                total -= applyBundleOffers(item, items, offer);
             }
         }
 
@@ -86,6 +86,7 @@ public class CheckoutSolution {
         return numFreeItems * SKU_PRICES.get(offer.freeItem());
     }
 }
+
 
 
 
