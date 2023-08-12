@@ -19,15 +19,19 @@ public class CheckoutSolution {
             return -1;
         }
 
-
         var total = 0;
 
-        if(skus.equals("A")){
-            total = 50;
+        for(Character product : SKU_PRICES.keySet()){
+            int count =  (int) skus.chars()
+                    .filter(ch -> ch == product)
+                    .count();
+
+            total+=count* SKU_PRICES.get(product);
         }
 
         return total;
     }
 }
+
 
 
