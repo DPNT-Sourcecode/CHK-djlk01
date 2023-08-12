@@ -49,9 +49,12 @@ public class CheckoutSolution {
     }
 
     private static void applyDirectDiscounts(Map<Character, Integer> items, SpecialOffer offer, int total){
-        
+        if(offer.quantity() > 0){
+            var numDiscounts = items.get(offer.quantity()) / offer.quantity();
+        }
     }
 }
+
 
 
 

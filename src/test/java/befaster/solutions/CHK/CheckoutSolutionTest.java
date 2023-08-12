@@ -68,7 +68,15 @@ public class CheckoutSolutionTest {
         assertThat(price).isEqualTo(350);
     }
 
+    @Test
+    public void checkoutBundles(){
+        var sku = "EEB";
+        var price = checkoutSolution.checkout(sku);
+        assertThat(price).isEqualTo(80);
+    }
+
 
 }
+
 
 
