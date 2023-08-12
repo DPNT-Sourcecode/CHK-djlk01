@@ -60,9 +60,3 @@ public class CheckoutSolution {
         }
     }
 }
-
-
-
-
-
-
