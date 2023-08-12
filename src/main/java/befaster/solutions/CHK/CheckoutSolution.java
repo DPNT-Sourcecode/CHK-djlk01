@@ -81,17 +81,28 @@ public class CheckoutSolution {
     }
 
     private static int applyBundleOffers(char product, Map<Character, Integer> items, SpecialOffer offer) {
+        var totalDeduction = 0;
         var numFreeItems = items.get(product) / offer.quantity();
 
-        if(numFreeItems == 0 || items.getOrDefault(offer.freeItem(), 0) < numFreeItems){
-            return 0;
+//        if(numFreeItems == 0 || items.getOrDefault(offer.freeItem(), 0) < numFreeItems){
+//            return 0;
+//        }
+//
+//        items.put(offer.freeItem(), items.get(offer.freeItem()) - numFreeItems);
+//
+//        return numFreeItems * SKU_PRICES.get(offer.freeItem());
+
+        while(numFreeItems > 0 && items.getOrDefault(offer.freeItem(), 0) >= numFreeItems){
+            totalDeduction += numFreeItems * SKU_PRICES.get(offer.freeItem());
+            items.put(offer.freeItem(), items.get(offer.freeItem()) - numFreeItems);
+            items.put(product, items.get(product) - offer.quantity());
+            numFreeItems = items.get(product) / offer.quantity();
         }
 
-        items.put(offer.freeItem(), items.get(offer.freeItem()) - numFreeItems);
-
-        return numFreeItems * SKU_PRICES.get(offer.freeItem());
+        return totalDeduction;
     }
 }
+
 
 
 
