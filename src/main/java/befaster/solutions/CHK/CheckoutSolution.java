@@ -105,8 +105,21 @@ public class CheckoutSolution {
 
     }
 
-    private static int applyBundleOffers(char product, Map<Character, Integer> items, SpecialOffer offer) {
-        var totalDeduction = 0;
+//    private static int applyBundleOffers(char product, Map<Character, Integer> items, SpecialOffer offer) {
+//        var totalDeduction = 0;
+//        var numFreeItems = items.get(product) / offer.quantity();
+//
+//        while(numFreeItems > 0 && items.getOrDefault(offer.freeItem(), 0) > 0){
+//            totalDeduction += SKU_PRICES.get(offer.freeItem());
+//            items.put(offer.freeItem(), items.get(offer.freeItem()) - 1);
+//            items.put(product, items.get(product) - offer.quantity());
+//            numFreeItems = items.get(product) / offer.quantity();
+//        }
+//
+//        return totalDeduction;
+//    }
+
+    private static void applyBundleOffers(char product, Map<Character, Integer> items, SpecialOffer offer) {
         var numFreeItems = items.get(product) / offer.quantity();
 
 //        if(items.get(product) >= offer.quantity()){
@@ -114,18 +127,9 @@ public class CheckoutSolution {
 //        }
 
         while(numFreeItems > 0 && items.getOrDefault(offer.freeItem(), 0) > 0){
-            totalDeduction += SKU_PRICES.get(offer.freeItem());
             items.put(offer.freeItem(), items.get(offer.freeItem()) - 1);
             items.put(product, items.get(product) - offer.quantity());
             numFreeItems = items.get(product) / offer.quantity();
         }
-
-        return totalDeduction;
     }
 }
-
-
-
-
-
-
