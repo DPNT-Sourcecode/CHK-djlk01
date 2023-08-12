@@ -65,7 +65,8 @@ public class CheckoutSolutionTest {
     public void checkoutListOfSpecialOffers(){
         var sku = "AAACAAAAA";
         var price = checkoutSolution.checkout(sku);
-        assertThat(price).isEqualTo(350);
+        // larger offers first 200 + 100 (normal) + 20
+        assertThat(price).isEqualTo(320);
     }
 
     @Test
@@ -77,3 +78,4 @@ public class CheckoutSolutionTest {
 
 
 }
+

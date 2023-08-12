@@ -40,6 +40,8 @@ public class CheckoutSolution {
         }
 
         for(Character product: SPECIAL_OFFERS.keySet()){
+            var offers = SPECIAL_OFFERS.get(product);
+            offers.sort((o1, o2) -> Integer.compare(o2.quantity());
             for(SpecialOffer offer : SPECIAL_OFFERS.get(product)){
                 applyDirectDiscounts(items, offer, total, product);
             }
@@ -60,3 +62,4 @@ public class CheckoutSolution {
         }
     }
 }
+
