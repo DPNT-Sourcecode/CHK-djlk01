@@ -18,6 +18,3 @@ public class SumSolutionTest {
         assertThat(sum.compute(1, 1)).isEqualTo(2);
     }
 }
-
-
-
