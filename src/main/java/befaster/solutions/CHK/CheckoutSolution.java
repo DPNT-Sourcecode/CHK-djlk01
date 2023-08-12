@@ -24,7 +24,8 @@ public class CheckoutSolution {
                     ),
                     'B', Arrays.asList(
                             new SpecialOffer(2, 45)
-                    ));
+                    ),
+                    'E', Arrays.asList(new SpecialOffer(2,0,'B')));
 
     public Integer checkout(String skus) {
         //input validation of skus - correct parsing
@@ -73,13 +74,11 @@ public class CheckoutSolution {
     private static void applyBundleOffers(Map<Character, Integer> items, SpecialOffer offer) {
         if (offer.freeItem() != null) {
             var freeItem = offer.freeItem();
-
             var freeItemsAvailable = items.getOrDefault(freeItem, 0);
-
             var remainingItemsToChargeFor = Math.max(0 ,items.getOrDefault(freeItem, 0) - freeItemsAvailable);
-
             items.put(freeItem, remainingItemsToChargeFor);
         }
     }
 }
+
 
