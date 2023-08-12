@@ -69,6 +69,13 @@ public class CheckoutSolutionTest {
     }
 
     @Test
+    public void checkoutIndividualItemEEEEBB(){
+        var sku = "EEEEBB";
+        var price = checkoutSolution.checkout(sku);
+        assertThat(price).isEqualTo(160);
+    }
+
+    @Test
     public void checkoutListOfSpecialOffers(){
         var sku = "AAACAAAAA";
         var price = checkoutSolution.checkout(sku);
@@ -91,5 +98,6 @@ public class CheckoutSolutionTest {
 
 
 }
+
 
 
