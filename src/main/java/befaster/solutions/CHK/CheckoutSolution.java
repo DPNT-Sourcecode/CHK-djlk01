@@ -48,6 +48,7 @@ public class CheckoutSolution {
             var offers = SPECIAL_OFFERS.get(product);
             offers.sort((o1, o2) -> Integer.compare(o2.quantity(), o1.quantity()));
             for (SpecialOffer offer : offers) {
+                applyBundleOffers(items, product, offer);
                 total += applyDirectDiscounts(items, offer, product);
             }
         }
@@ -69,27 +70,16 @@ public class CheckoutSolution {
         return discount;
     }
 
-    private static int applyBundleOffers(Map<Character, Integer> items, SpecialOffer offer) {
-        if(offer.freeItem() != null){
-
-            char mainItem = offer
-            int numOffers = items.getOrDefault(offer.freeItem(), 0) / offer.quantity();
-
-            items.put(offer.freeItem(), items.get(offer.freeItem()) - numOffers * offer.quantity());
-
+    private static void applyBundleOffers(Map<Character, Integer> items, char mainItem, SpecialOffer offer) {
+        if (offer.freeItem() != null) {
             var freeItem = offer.freeItem();
-            int currentCount = items.getOrDefault(freeItem, 0);
-            items.put()
+            var numFreeItems = items.getOrDefault(mainItem, 0) / offer.quantity();
+            var remainingItemsToChargeFor = Math.max(0, items.getOrDefault(freeItem, 0) - numFreeItems);
+            items.put(freeItem, remainingItemsToChargeFor);
         }
-        int discount = 0;
-        if (offer.quantity() > 0) {
-            var numDiscounts = items.get(product) / offer.quantity();
-            discount += numDiscounts * offer.price();
-            items.put(product, items.get(product) - numDiscounts * offer.quantity());
-        }
-        return discount;
     }
 }
+
 
 
 
