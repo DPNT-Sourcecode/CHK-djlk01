@@ -9,8 +9,10 @@ public class CheckoutSolution {
 
     private static final String VALID_SKU_PATTERN = "^[ABCD]*$";
 
-    private static final Map<Character, Integer> SKU_PRICES = Map.of('A', 50, 'B', 30, 'C', 20, 'D', 15);
-//    private static final Map<Character, Map<Integer>>
+    private static final Map<Character, Integer> SKU_PRICES =
+            Map.of('A', 50, 'B', 30, 'C', 20, 'D', 15);
+    private static final Map<Character, SpecialOffer> SPECIAL_OFFERS =
+            Map.of('A', new SpecialOffer(3, 130));
     public Integer checkout(String skus) {
         //input validation of skus - correct parsing
         // decomposition - handle pricing of individual items and their respective discounts separately
@@ -32,6 +34,7 @@ public class CheckoutSolution {
         return total;
     }
 }
+
 
 
 
