@@ -73,17 +73,16 @@ public class CheckoutSolution {
     private static void applyBundleOffers(Map<Character, Integer> items, char mainItem, SpecialOffer offer) {
         if (offer.freeItem() != null) {
             var freeItem = offer.freeItem();
-            var numFreeItems = items.getOrDefault(mainItem, 0) / offer.quantity();
-            items.put(mainItem, items.get(mainItem) - numFreeItems* offer.quantity());
-            var remainingItemsToChargeFor = Math.max(0, items.getOrDefault(freeItem, 0) - numFreeItems);
+
+            int offersToApply = items.getOrDefault(mainItem, 0) / offer.quantity();
+
+            int freeItemsAvailable = items.getOrDefault(freeItem, 0);
+
+            int offersApplied = Math.min(offersToApply, freeItemsAvailable);
+
+            items.put(mainItem, items.getOrDefault(mainItem, 0) - offersApplied * offer.quantity());
+            items.put(freeItem, items.getOrDefault(mainItem, 0) - offersApplied * offer.quantity());
             items.put(freeItem, remainingItemsToChargeFor);
         }
     }
 }
-
-
-
-
-
-
-
