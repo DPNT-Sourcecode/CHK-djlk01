@@ -60,5 +60,15 @@ public class CheckoutSolutionTest {
         var price = checkoutSolution.checkout(sku);
         assertThat(price).isEqualTo(40);
     }
+
+    @Test
+    public void checkoutListOfSpecialOffers(){
+        var sku = "AAACAAAAA";
+        var price = checkoutSolution.checkout(sku);
+        assertThat(price).isEqualTo(350);
+    }
+
+
 }
+
 

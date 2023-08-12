@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class CheckoutSolution {
 
-    private static final String VALID_SKU_PATTERN = "^[ABCD]*$";
+    private static final String VALID_SKU_PATTERN = "^[ABCDE]*$";
 
     private static final Map<Character, Integer> SKU_PRICES =
             Map.of('A', 50,
@@ -46,4 +46,5 @@ public class CheckoutSolution {
         return total;
     }
 }
+
 
