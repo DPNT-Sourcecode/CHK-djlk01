@@ -43,6 +43,17 @@ public class CheckoutSolution {
                     .count());
         }
 
+        for(Map.Entry<Character, List<SpecialOffer>> entry : SPECIAL_OFFERS.entrySet()){
+            var item = entry.getKey();
+            for(SpecialOffer offer : entry.getValue()){
+                if(offer.freeItem() != null){
+                    var deduction = applyBundleOffers(item, items, offer);
+                    total -= deduction;
+                }
+            }
+
+        }
+
         for(Map.Entry<Character, Integer> itemCountEntry : items.entrySet()){
             var item = itemCountEntry.getKey();
             var count = itemCountEntry.getValue();
@@ -65,42 +76,15 @@ public class CheckoutSolution {
                 }
             }
 
-            for(SpecialOffer offer : sortedOffers){
-                if(offer.freeItem() != null){
-                    var deduction = applyBundleOffers(item, items, offer);
-                    total -= deduction;
-                    count = items.get(item);
-                }
-            }
-
 //            for(SpecialOffer offer : sortedOffers){
-//                if(offer.freeItem() == null){
-//                    var discount = applyDirectDiscounts(count, offer,item);
-//                    var itemsUsed = (count / offer.quantity()) * offer.quantity();
-//
-//                    total += SKU_PRICES.get(item) * itemsUsed - discount; // original price - discount
-//                    count -= itemsUsed;
-//                    items.put(item,count);
-//                }
-//            }
-
-//            for (SpecialOffer offer : sortedOffers) {
-//
-//                if(offer.freeItem() == null){
-//                    var discount = applyDirectDiscounts(count, offer,item);
-//                    var itemsUsed = (count / offer.quantity()) * offer.quantity();
-//
-//                    total += SKU_PRICES.get(item) * itemsUsed - discount; // original price - discount
-//                    count -= itemsUsed;
-//                    items.put(item,count);
-//                } else {
+//                if(offer.freeItem() != null){
 //                    var deduction = applyBundleOffers(item, items, offer);
 //                    total -= deduction;
 //                    count = items.get(item);
 //                }
 //            }
+
             total += count * SKU_PRICES.get(item);
-            var totalp = total;
         }
 
 
@@ -133,6 +117,7 @@ public class CheckoutSolution {
         return totalDeduction;
     }
 }
+
 
 
 
