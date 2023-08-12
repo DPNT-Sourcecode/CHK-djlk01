@@ -48,7 +48,7 @@ public class CheckoutSolution {
             var offers = SPECIAL_OFFERS.get(product);
             offers.sort((o1, o2) -> Integer.compare(o2.quantity(), o1.quantity()));
             for (SpecialOffer offer : offers) {
-                applyBundleOffers(items, product, offer);
+                applyBundleOffers(items, offer);
                 total += applyDirectDiscounts(items, offer, product);
             }
         }
@@ -70,19 +70,16 @@ public class CheckoutSolution {
         return discount;
     }
 
-    private static void applyBundleOffers(Map<Character, Integer> items, char mainItem, SpecialOffer offer) {
+    private static void applyBundleOffers(Map<Character, Integer> items, SpecialOffer offer) {
         if (offer.freeItem() != null) {
             var freeItem = offer.freeItem();
 
-            int offersToApply = items.getOrDefault(mainItem, 0) / offer.quantity();
+            var freeItemsAvailable = items.getOrDefault(freeItem, 0);
 
-            int freeItemsAvailable = items.getOrDefault(freeItem, 0);
+            var remainingItemsToChargeFor = Math.max(0 ,items.getOrDefault(freeItem, 0) - freeItemsAvailable);
 
-            int offersApplied = Math.min(offersToApply, freeItemsAvailable);
-
-            items.put(mainItem, items.getOrDefault(mainItem, 0) - offersApplied * offer.quantity());
-            items.put(freeItem, items.getOrDefault(mainItem, 0) - offersApplied * offer.quantity());
             items.put(freeItem, remainingItemsToChargeFor);
         }
     }
 }
+
