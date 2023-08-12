@@ -61,8 +61,9 @@ public class CheckoutSolution {
         return total;
     }
 
-    private static int applyDirectDiscounts(Map<Character, Integer> items, SpecialOffer offer, char product) {
-        int discount = 0;
+    private static int applyDirectDiscounts(int count, SpecialOffer offer) {
+        var offerCount = count / offer.quantity();
+        var regularPriceForOfferedItems = offerCount * offer.quantity() * SKU_PRICES.get(offer.product());
         if (offer.quantity() > 0) {
             var numDiscounts = items.get(product) / offer.quantity();
             discount += numDiscounts * offer.price();
@@ -80,5 +81,6 @@ public class CheckoutSolution {
         }
     }
 }
+
 
 
