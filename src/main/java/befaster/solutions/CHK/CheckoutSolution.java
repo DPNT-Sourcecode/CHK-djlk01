@@ -52,8 +52,15 @@ public class CheckoutSolution {
                     .sorted(Comparator.comparingInt(SpecialOffer::quantity).reversed())
                     .toList();
 
-            for (SpecialOffer offer : sortedOffers) {
+            for(SpecialOffer offer : sortedOffers){
+                if(offer.freeItem() != null){
+                    var deduction = applyBundleOffers(item, items, offer);
+                    total -= deduction;
+                    count = items.get(item);
+                }
+            }
 
+            for(SpecialOffer offer : sortedOffers){
                 if(offer.freeItem() == null){
                     var discount = applyDirectDiscounts(count, offer,item);
                     var itemsUsed = (count / offer.quantity()) * offer.quantity();
@@ -61,23 +68,36 @@ public class CheckoutSolution {
                     total += SKU_PRICES.get(item) * itemsUsed - discount; // original price - discount
                     count -= itemsUsed;
                     items.put(item,count);
-                } else {
-                    var deduction = applyBundleOffers(item, items, offer);
-                    total -= deduction;
-                    count = items.get(item);
                 }
             }
+
+//            for (SpecialOffer offer : sortedOffers) {
+//
+//                if(offer.freeItem() == null){
+//                    var discount = applyDirectDiscounts(count, offer,item);
+//                    var itemsUsed = (count / offer.quantity()) * offer.quantity();
+//
+//                    total += SKU_PRICES.get(item) * itemsUsed - discount; // original price - discount
+//                    count -= itemsUsed;
+//                    items.put(item,count);
+//                } else {
+//                    var deduction = applyBundleOffers(item, items, offer);
+//                    total -= deduction;
+//                    count = items.get(item);
+//                }
+//            }
             total += count * SKU_PRICES.get(item);
         }
+
 
         return total;
     }
 
     private static int applyDirectDiscounts(int count, SpecialOffer offer, char product) {
         var numOffers = count / offer.quantity();
-        var originalPriceofOfferedItems = numOffers * offer.quantity() * SKU_PRICES.get(product);
+        var originalPriceOfOfferedItems = numOffers * offer.quantity() * SKU_PRICES.get(product);
         var totalDiscountedPriceForOfferedItems = numOffers * offer.price();
-        return totalDiscountedPriceForOfferedItems - originalPriceofOfferedItems;
+        return totalDiscountedPriceForOfferedItems - originalPriceOfOfferedItems;
 
     }
 
@@ -109,6 +129,7 @@ public class CheckoutSolution {
         return totalDeduction;
     }
 }
+
 
 
 
