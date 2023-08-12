@@ -74,11 +74,13 @@ public class CheckoutSolution {
         if (offer.freeItem() != null) {
             var freeItem = offer.freeItem();
             var numFreeItems = items.getOrDefault(mainItem, 0) / offer.quantity();
+            items.put(mainItem, items.get(mainItem) - numFreeItems* offer.quantity());
             var remainingItemsToChargeFor = Math.max(0, items.getOrDefault(freeItem, 0) - numFreeItems);
             items.put(freeItem, remainingItemsToChargeFor);
         }
     }
 }
+
 
 
 
