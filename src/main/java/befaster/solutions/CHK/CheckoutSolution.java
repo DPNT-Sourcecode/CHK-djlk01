@@ -68,7 +68,21 @@ public class CheckoutSolution {
         }
         return discount;
     }
+
+    private static int applyBundleOffers(Map<Character, Integer> items, SpecialOffer offer) {
+        if(offer.freeItem() != null){
+            int numOffers = items.get(offer.quantity()) / offer.quantity();
+        }
+        int discount = 0;
+        if (offer.quantity() > 0) {
+            var numDiscounts = items.get(product) / offer.quantity();
+            discount += numDiscounts * offer.price();
+            items.put(product, items.get(product) - numDiscounts * offer.quantity());
+        }
+        return discount;
+    }
 }
+
 
 
 
