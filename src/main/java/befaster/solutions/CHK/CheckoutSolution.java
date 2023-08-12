@@ -45,40 +45,24 @@ public class CheckoutSolution {
         for(Map.Entry<Character, Integer> itemCountEntry : items.entrySet()){
             var item = itemCountEntry.getKey();
             var count = itemCountEntry.getValue();
-
-//            total += count * SKU_PRICES.get(item);
-
             var offersForItem = SPECIAL_OFFERS.getOrDefault(item, Collections.emptyList());
-            var isBundleOfferApplied = false;
-
-//            for(SpecialOffer offer : offersForItem){
-//                if(offer.freeItem() != null){
-//                    var deduction = applyBundleOffers(item, items, offer);
-//                    total -= deduction;
-//                    count = items.get(item);
-//                }
-//            }
 
             for (SpecialOffer offer : offersForItem) {
+
+
                 if(offer.freeItem() == null){
-                    var deduction = applyBundleOffers(item, items, offer);
-                    total -= deduction;
-                    if(deduction > 0){
-                        isBundleOfferApplied = true;
-                    }
-                    count = items.get(item);
-//                    int discount = applyDirectDiscounts(count, offer,item);
-//                    total -= discount;
-//                    if(discount > 0){
-//                        var offerCount = count / offer.quantity();
-//                        var itemsUsed = offerCount * offer.quantity();
-//                        count -= itemsUsed;
-//                        items.put(item, count);
-//                    }
-                } else if(!isBundleOfferApplied) {
                     var discount = applyDirectDiscounts(count, offer,item);
                     total -= discount;
 
+                    var offerCount = count / offer.quantity();
+                    var itemsUsed = offerCount * offer.quantity();
+
+                    count -= itemsUsed;
+                    items.put(item,count);
+                } else {
+                    var deduction = applyBundleOffers(item, items, offer);
+                    total -= deduction;
+                    count = items.get(item);
                 }
             }
             total += count * SKU_PRICES.get(item);
@@ -108,5 +92,6 @@ public class CheckoutSolution {
         return numFreeItems * SKU_PRICES.get(offer.freeItem());
     }
 }
+
 
 
