@@ -41,9 +41,9 @@ public class CheckoutSolution {
 
         for(Character product: SPECIAL_OFFERS.keySet()){
             var offers = SPECIAL_OFFERS.get(product);
-            offers.sort((o1, o2) -> Integer.compare(o2.quantity());
-            for(SpecialOffer offer : SPECIAL_OFFERS.get(product)){
-                applyDirectDiscounts(items, offer, total, product);
+            offers.sort((o1, o2) -> Integer.compare(o2.quantity(), o1.quantity()));
+            for(SpecialOffer offer : offers){
+                total += applyDirectDiscounts(items, offer, product);
             }
         }
 
@@ -54,12 +54,15 @@ public class CheckoutSolution {
         return total;
     }
 
-    private static void applyDirectDiscounts(Map<Character, Integer> items, SpecialOffer offer, int total, char product){
+    private static int applyDirectDiscounts(Map<Character, Integer> items, SpecialOffer offer, char product){
+        int discount = 0;
         if(offer.quantity() > 0){
             var numDiscounts = items.get(product) / offer.quantity();
-            total+= numDiscounts * offer.price();
+            discount+= numDiscounts * offer.price();
             items.put(product, items.get(product) - numDiscounts * offer.quantity());
         }
+        return discount;
     }
 }
+
 
