@@ -46,7 +46,7 @@ public class CheckoutSolution {
             var item = itemCountEntry.getKey();
             var count = itemCountEntry.getValue();
 
-            total += count * SKU_PRICES.get(item);
+//            total += count * SKU_PRICES.get(item);
 
             var offersForItem = SPECIAL_OFFERS.getOrDefault(item, Collections.emptyList());
             var isBundleOfferApplied = false;
@@ -108,4 +108,5 @@ public class CheckoutSolution {
         return numFreeItems * SKU_PRICES.get(offer.freeItem());
     }
 }
+
 
