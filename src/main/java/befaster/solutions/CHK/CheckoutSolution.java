@@ -33,7 +33,7 @@ public class CheckoutSolution {
             return -1;
         }
 
-        var total = 0;
+//        var total = 0;
 
         var items = new HashMap<Character, Integer>();
 
@@ -47,12 +47,17 @@ public class CheckoutSolution {
             var item = entry.getKey();
             for(SpecialOffer offer : entry.getValue()){
                 if(offer.freeItem() != null){
-                    var deduction = applyBundleOffers(item, items, offer);
-                    total -= deduction;
+//                    var deduction = applyBundleOffers(item, items, offer);
+                    applyBundleOffers(item, items, offer);
+//                    total -= deduction;
                 }
             }
 
         }
+
+        var total = items.entrySet().stream()
+                .mapToInt(entry -> entry.getValue() * SKU_PRICES.get(entry.getKey()))
+                .sum();
 
         for(Map.Entry<Character, Integer> itemCountEntry : items.entrySet()){
             var item = itemCountEntry.getKey();
@@ -69,10 +74,11 @@ public class CheckoutSolution {
                         var discount = applyDirectDiscounts(count, offer,item);
                         var itemsUsed = (count / offer.quantity()) * offer.quantity();
 
-                        total += SKU_PRICES.get(item) * itemsUsed - discount; // original price - discount
+//                        total += SKU_PRICES.get(item) * itemsUsed - discount;
+                        total -= discount;
                         count -= itemsUsed;
                     }
-                    items.put(item,count);
+//                    items.put(item,count);
                 }
             }
 
@@ -84,7 +90,7 @@ public class CheckoutSolution {
 //                }
 //            }
 
-            total += count * SKU_PRICES.get(item);
+//            total += count * SKU_PRICES.get(item);
         }
 
 
@@ -117,6 +123,7 @@ public class CheckoutSolution {
         return totalDeduction;
     }
 }
+
 
 
 
