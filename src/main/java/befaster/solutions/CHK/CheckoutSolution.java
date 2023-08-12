@@ -82,13 +82,14 @@ public class CheckoutSolution {
     private static int applyBundleOffers(char product, Map<Character, Integer> items, SpecialOffer offer) {
         var numFreeItems = items.get(product) / offer.quantity();
 
-        if(numFreeItems == 0){
+        if(numFreeItems == 0 ||){
             return 0;
         }
 
         return numFreeItems * SKU_PRICES.get(offer.freeItem());
     }
 }
+
 
 
 
