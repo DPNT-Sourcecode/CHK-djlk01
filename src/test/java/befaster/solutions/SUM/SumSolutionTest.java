@@ -4,8 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
+import static org.assertj.core.api.Assertions.*;
 
 public class SumSolutionTest {
     private SumSolution sum;
@@ -17,6 +16,7 @@ public class SumSolutionTest {
 
     @Test
     public void compute_sum() {
-        assertThat(sum.compute(1, 1), equalTo(2));
+        assertThat(sum.compute(1, 1)).isEqualTo(2);
     }
 }
+
