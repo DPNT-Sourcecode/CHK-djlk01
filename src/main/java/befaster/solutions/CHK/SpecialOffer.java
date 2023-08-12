@@ -4,5 +4,3 @@ import lombok.*;
 
 public record SpecialOffer(int quantity, int price) {
 }
-
-

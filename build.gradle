@@ -64,4 +64,3 @@ jacocoTestReport {
         html.required = false
     }
 }
-

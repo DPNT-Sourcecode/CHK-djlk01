@@ -52,7 +52,3 @@ public class CheckoutSolutionTest {
         assertThat(price2).isEqualTo(45);
     }
 }
-
-
-
-
