@@ -59,9 +59,9 @@ public class CheckoutSolution {
                     if(discount > 0){
                         var itemsUsed = discount / SKU_PRICES.get(item) - offer.price() / offer.quantity();
                         count -= itemsUsed;
-                        items.put()
+                        items.put(item, count);
                     }
-                    total-= applyDirectDiscounts(count, offer,item);
+//                    total-= applyDirectDiscounts(count, offer,item);
                 } else {
                     total -= applyBundleOffers(item, items, offer);
 
@@ -99,6 +99,7 @@ public class CheckoutSolution {
         return numFreeItems * SKU_PRICES.get(offer.freeItem());
     }
 }
+
 
 
 
