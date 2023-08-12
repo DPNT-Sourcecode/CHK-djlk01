@@ -2,6 +2,7 @@ package befaster.solutions.SUM;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 
 import static org.assertj.core.api.Assertions.*;
@@ -19,4 +20,5 @@ public class SumSolutionTest {
         assertThat(sum.compute(1, 1)).isEqualTo(2);
     }
 }
+
 
