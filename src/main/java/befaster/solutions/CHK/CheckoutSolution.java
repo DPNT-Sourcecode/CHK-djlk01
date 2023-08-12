@@ -43,18 +43,6 @@ public class CheckoutSolution {
                     .count());
         }
 
-        for(Map.Entry<Character, List<SpecialOffer>> entry : SPECIAL_OFFERS.entrySet()){
-            var item = entry.getKey();
-            for(SpecialOffer offer : entry.getValue()){
-                if(offer.freeItem() != null){
-//                    var deduction = applyBundleOffers(item, items, offer);
-                    applyBundleOffers(item, items, offer);
-//                    total -= deduction;
-                }
-            }
-
-        }
-
         var total = items.entrySet().stream()
                 .mapToInt(entry -> entry.getValue() * SKU_PRICES.get(entry.getKey()))
                 .sum();
@@ -78,9 +66,9 @@ public class CheckoutSolution {
                         total -= discount;
                         count -= itemsUsed;
                     }
-//                    items.put(item,count);
                 }
             }
+            items.put(item,count);
 
 //            for(SpecialOffer offer : sortedOffers){
 //                if(offer.freeItem() != null){
@@ -91,6 +79,18 @@ public class CheckoutSolution {
 //            }
 
 //            total += count * SKU_PRICES.get(item);
+        }
+
+        for(Map.Entry<Character, List<SpecialOffer>> entry : SPECIAL_OFFERS.entrySet()){
+            var item = entry.getKey();
+            for(SpecialOffer offer : entry.getValue()){
+                if(offer.freeItem() != null){
+//                    var deduction = applyBundleOffers(item, items, offer);
+                    applyBundleOffers(item, items, offer);
+//                    total -= deduction;
+                }
+            }
+
         }
 
 
@@ -133,3 +133,4 @@ public class CheckoutSolution {
         }
     }
 }
+
