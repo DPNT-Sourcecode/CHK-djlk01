@@ -30,7 +30,10 @@ public class CheckoutSolution {
             if(SPECIAL_OFFERS.containsKey(product)){
                 var offer = SPECIAL_OFFERS.get(product);
 
-                while(count >= offer.quantity())
+                while(count >= offer.quantity()) {
+                    total += offer.price();
+                    count -= offer.quantity();
+                }
             }
 
             total += count * SKU_PRICES.get(product);
@@ -39,6 +42,7 @@ public class CheckoutSolution {
         return total;
     }
 }
+
 
 
 
