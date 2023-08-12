@@ -83,11 +83,10 @@ public class CheckoutSolution {
 //        }
         var numFreeItems = items.get(product) / offer.quantity();
 
+        if(numFreeItems == 0){
+            return 0;
+        }
+
         return numFreeItems * SKU_PRICES.get(offer.freeItem());
     }
 }
-
-
-
-
-
