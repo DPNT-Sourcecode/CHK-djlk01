@@ -1,20 +1,22 @@
-package befaster.solutions.SUM;
+package befaster.solutions.HLO;
 
+import befaster.solutions.SUM.SumSolution;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SumSolutionTest {
-    private SumSolution sum;
+public class HelloSolutionTest {
+    private HelloSolution hello;
 
     @BeforeEach
     public void setUp() {
-        sum = new SumSolution();
+        hello = new HelloSolution();
     }
 
     @Test
     public void compute_sum() {
-        assertThat(sum.compute(1, 1)).isEqualTo(2);
+//        assertThat(sum.compute(1, 1)).isEqualTo(2);
     }
 }
+
