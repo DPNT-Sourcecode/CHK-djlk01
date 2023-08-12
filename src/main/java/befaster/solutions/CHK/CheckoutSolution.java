@@ -100,6 +100,7 @@ public class CheckoutSolution {
 //                }
 //            }
             total += count * SKU_PRICES.get(item);
+            var totalp = total;
         }
 
 
@@ -132,5 +133,6 @@ public class CheckoutSolution {
         return totalDeduction;
     }
 }
+
 
 
