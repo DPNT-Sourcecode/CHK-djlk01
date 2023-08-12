@@ -1,5 +1,6 @@
 package befaster.solutions.CHK;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,11 +9,13 @@ public class CheckoutSolution {
     private static final String VALID_SKU_PATTERN = "^[ABCDE]*$";
 
     private static final Map<Character, Integer> SKU_PRICES =
-            Map.of('A', 50,
-                    'B', 30,
-                    'C', 20,
-                    'D', 15,
-                    'E', 40);
+            new HashMap<>() {{
+                put('A', 50);
+                put('B', 30);
+                put('C', 20);
+                put('D', 15);
+                put('E', 40);
+            }};
     private static final Map<Character, List<SpecialOffer>> SPECIAL_OFFERS =
             Map.of('A', List.of(new SpecialOffer(3, 130),
                             new SpecialOffer(5, 200)) ,
@@ -28,32 +31,36 @@ public class CheckoutSolution {
 
         var total = 0;
 
-        for (Character product : SKU_PRICES.keySet()) {
-            int count = (int) skus.chars()
+        var items = new HashMap<Character, Integer>();
+
+        for(Character product : SKU_PRICES.keySet()){
+            items.put(product, (int) skus.chars()
                     .filter(ch -> ch == product)
-                    .count();
+                    .count());
+        }
 
-            if(SPECIAL_OFFERS.containsKey(product)){
-                var offer = SPECIAL_OFFERS.get(product);
-
-                while(count >= offer.quantity()) {
-                    total += offer.price();
-                    count -= offer.quantity();
-                }
+        for(Character product: SPECIAL_OFFERS.keySet()){
+            for(SpecialOffer offer : SPECIAL_OFFERS.get(product)){
+                applyDirectDiscounts(items, offer, total, product);
             }
+        }
 
-            total += count * SKU_PRICES.get(product);
+        for(Map.Entry<Character, Integer> item : items.entrySet()){
+            total+= item.getValue() * SKU_PRICES.get(item.getKey());
         }
 
         return total;
     }
 
-    private static void applyDirectDiscounts(Map<Character, Integer> items, SpecialOffer offer, int total){
+    private static void applyDirectDiscounts(Map<Character, Integer> items, SpecialOffer offer, int total, char product){
         if(offer.quantity() > 0){
-            var numDiscounts = items.get(offer.quantity()) / offer.quantity();
+            var numDiscounts = items.get(product) / offer.quantity();
+            total+= numDiscounts * offer.price();
+            items.put(product, items.get(product) - numDiscounts * offer.quantity());
         }
     }
 }
+
 
 
 
