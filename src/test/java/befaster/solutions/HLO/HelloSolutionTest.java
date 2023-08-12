@@ -18,6 +18,12 @@ public class HelloSolutionTest {
     public void sayHello() {
         assertThat(helloSolution.hello("bob")).isEqualTo("Hello bob");
     }
+
+    @Test
+    public void sayHello2() {
+        assertThat(helloSolution.hello("bob")).isEqualTo("hello");
+    }
 }
+
 
 
