@@ -7,16 +7,17 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class HelloSolutionTest {
-    private HelloSolution hello;
+    private HelloSolution helloSolution;
 
     @BeforeEach
     public void setUp() {
-        hello = new HelloSolution();
+        helloSolution = new HelloSolution();
     }
 
     @Test
-    public void compute_sum() {
-//        assertThat(sum.compute(1, 1)).isEqualTo(2);
+    public void sayHello() {
+        assertThat(helloSolution.hello("bob")).isEqualTo("Hello bob");
     }
 }
+
 
