@@ -99,10 +99,12 @@ public class CheckoutSolution {
             numFreeItems = items.get(product) / offer.quantity();
         }
 
+//        while(items.get(product) >= offer.quantity() && items.getOrDefault(offer.freeItem(), 0) > 0){
+//            totalDeduction +=  SKU_PRICES.get(offer.freeItem());
+//            items.put(offer.freeItem(), items.get(offer.freeItem()) - 1);
+//            items.put(product, items.get(product) - offer.quantity());
+//        }
+
         return totalDeduction;
     }
 }
-
-
-
-
