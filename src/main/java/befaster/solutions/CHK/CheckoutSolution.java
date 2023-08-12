@@ -99,7 +99,7 @@ public class CheckoutSolution {
 //                    count = items.get(item);
 //                }
 //            }
-            total += count * SKU_PRICES.get(item);
+//            total += count * SKU_PRICES.get(item);
         }
 
 
@@ -132,3 +132,4 @@ public class CheckoutSolution {
         return totalDeduction;
     }
 }
+
