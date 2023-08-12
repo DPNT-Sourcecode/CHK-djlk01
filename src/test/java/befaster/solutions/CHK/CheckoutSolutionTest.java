@@ -20,4 +20,11 @@ public class CheckoutSolutionTest {
         var price = checkoutSolution.checkout(skuA);
         assertThat(price).isEqualTo(50);
     }
+
+    @Test
+    public void checkoutNullInput(){
+        var price = checkoutSolution.checkout(null);
+        assertThat(price).isEqualTo(-1);
+    }
 }
+
