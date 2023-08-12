@@ -1,9 +1,6 @@
 package befaster.solutions.CHK;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CheckoutSolution {
 
@@ -51,7 +48,9 @@ public class CheckoutSolution {
 
             total += count * SKU_PRICES.get(item);
 
-            var offersForItem = SPECIAL_OFFERS.get(item);
+            var offersForItem = SPECIAL_OFFERS.getOrDefault(item, Collections.emptyList());
+
+            offersForItem.sort(Comparator.comparingInt(SpecialOffer::quantity).reversed());
 
             for (SpecialOffer offer : offersForItem) {
                 if(offer.freeItem() == null){
@@ -90,3 +89,4 @@ public class CheckoutSolution {
         return numFreeItems * SKU_PRICES.get(offer.freeItem());
     }
 }
+
