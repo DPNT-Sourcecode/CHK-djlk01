@@ -71,7 +71,15 @@ public class CheckoutSolution {
 
     private static int applyBundleOffers(Map<Character, Integer> items, SpecialOffer offer) {
         if(offer.freeItem() != null){
-            int numOffers = items.get(offer.quantity()) / offer.quantity();
+
+            char mainItem = offer
+            int numOffers = items.getOrDefault(offer.freeItem(), 0) / offer.quantity();
+
+            items.put(offer.freeItem(), items.get(offer.freeItem()) - numOffers * offer.quantity());
+
+            var freeItem = offer.freeItem();
+            int currentCount = items.getOrDefault(freeItem, 0);
+            items.put()
         }
         int discount = 0;
         if (offer.quantity() > 0) {
@@ -82,6 +90,7 @@ public class CheckoutSolution {
         return discount;
     }
 }
+
 
 
 
