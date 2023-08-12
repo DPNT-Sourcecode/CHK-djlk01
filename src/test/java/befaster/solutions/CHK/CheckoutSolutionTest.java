@@ -51,4 +51,14 @@ public class CheckoutSolutionTest {
 
         assertThat(price2).isEqualTo(45);
     }
+
+    // R2
+
+    @Test
+    public void checkoutIndividualItemE(){
+        var sku = "E";
+        var price = checkoutSolution.checkout(sku);
+        assertThat(price).isEqualTo(40);
+    }
 }
+

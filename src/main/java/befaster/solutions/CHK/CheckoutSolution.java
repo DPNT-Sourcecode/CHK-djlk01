@@ -7,7 +7,11 @@ public class CheckoutSolution {
     private static final String VALID_SKU_PATTERN = "^[ABCD]*$";
 
     private static final Map<Character, Integer> SKU_PRICES =
-            Map.of('A', 50, 'B', 30, 'C', 20, 'D', 15);
+            Map.of('A', 50,
+                    'B', 30,
+                    'C', 20,
+                    'D', 15,
+                    'E', 40);
     private static final Map<Character, SpecialOffer> SPECIAL_OFFERS =
             Map.of('A', new SpecialOffer(3, 130),
                     'B', new SpecialOffer(2, 45));
@@ -42,3 +46,4 @@ public class CheckoutSolution {
         return total;
     }
 }
+
