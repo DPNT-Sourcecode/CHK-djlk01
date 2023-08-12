@@ -57,11 +57,9 @@ public class CheckoutSolution {
 
                 if(offer.freeItem() == null){
                     var discount = applyDirectDiscounts(count, offer,item);
-                    total -= discount;
+                    var itemsUsed = (count / offer.quantity()) * offer.quantity();
 
-                    var offerCount = count / offer.quantity();
-                    var itemsUsed = offerCount * offer.quantity();
-
+                    total += discount;
                     count -= itemsUsed;
                     items.put(item,count);
                 } else {
@@ -78,11 +76,13 @@ public class CheckoutSolution {
 
     private static int applyDirectDiscounts(int count, SpecialOffer offer, char product) {
         var offerCount = count / offer.quantity();
-        if (offerCount == 0){
-            return 0;
-        }
+//        if (offerCount == 0){
+//            return 0;
+//        }
         var regularPriceForOfferedItems = offerCount * offer.quantity() * SKU_PRICES.get(product);
+        var discountedPriceForOfferedItems = offerCount * offer.price();
         return regularPriceForOfferedItems - (offerCount * offer.price());
+
     }
 
     private static int applyBundleOffers(char product, Map<Character, Integer> items, SpecialOffer offer) {
@@ -113,4 +113,5 @@ public class CheckoutSolution {
         return totalDeduction;
     }
 }
+
 
