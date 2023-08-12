@@ -54,11 +54,13 @@ public class CheckoutSolution {
 
             for(SpecialOffer offer : sortedOffers){
                 if(offer.freeItem() == null){
-                    var discount = applyDirectDiscounts(count, offer,item);
-                    var itemsUsed = (count / offer.quantity()) * offer.quantity();
+                    while(count >= offer.quantity()){
+                        var discount = applyDirectDiscounts(count, offer,item);
+                        var itemsUsed = (count / offer.quantity()) * offer.quantity();
 
-                    total += SKU_PRICES.get(item) * itemsUsed - discount; // original price - discount
-                    count -= itemsUsed;
+                        total += SKU_PRICES.get(item) * itemsUsed - discount; // original price - discount
+                        count -= itemsUsed;
+                    }
                     items.put(item,count);
                 }
             }
@@ -116,6 +118,8 @@ public class CheckoutSolution {
         var totalDeduction = 0;
         var numFreeItems = items.get(product) / offer.quantity();
 
+        totalDeduction += items.get(product) * SKU_PRICES.get(product);
+
 //        if(numFreeItems == 0 || items.getOrDefault(offer.freeItem(), 0) < numFreeItems){
 //            return 0;
 //        }
@@ -140,4 +144,5 @@ public class CheckoutSolution {
         return totalDeduction;
     }
 }
+
 
