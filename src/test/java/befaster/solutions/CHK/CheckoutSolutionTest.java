@@ -26,5 +26,19 @@ public class CheckoutSolutionTest {
         var price = checkoutSolution.checkout(null);
         assertThat(price).isEqualTo(-1);
     }
+
+    @Test
+    public void checkoutInvalidInput(){
+        var price = checkoutSolution.checkout("ZXC");
+        assertThat(price).isEqualTo(-1);
+    }
+
+    @Test
+    public void checkoutMultipleItems(){
+        var sku = "ABC";
+        var price = checkoutSolution.checkout(sku);
+        assertThat(price).isEqualTo(100);
+    }
 }
+
 

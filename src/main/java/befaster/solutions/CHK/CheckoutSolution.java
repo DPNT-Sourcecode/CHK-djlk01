@@ -7,12 +7,19 @@ import java.util.Map;
 
 public class CheckoutSolution {
 
-    private static final Map<Character, Integer> skuPrices = Map.of('A', 50, 'B', 30, 'C', 20, 'D', 15);
+    private static final String VALID_SKU_PATTERN = "^[ABCD]*$";
+
+    private static final Map<Character, Integer> SKU_PRICES = Map.of('A', 50, 'B', 30, 'C', 20, 'D', 15);
 //    private static final Map<Character, Map<Integer>>
     public Integer checkout(String skus) {
         //input validation of skus - correct parsing
         // decomposition - handle pricing of individual items and their respective discounts separately
         // extendable - make it easy to update prices or introduce new special offers in the future
+        if(skus == null || !skus.matches(VALID_SKU_PATTERN)) {
+            return -1;
+        }
+
+
         var total = 0;
 
         if(skus.equals("A")){
@@ -22,4 +29,5 @@ public class CheckoutSolution {
         return total;
     }
 }
+
 
