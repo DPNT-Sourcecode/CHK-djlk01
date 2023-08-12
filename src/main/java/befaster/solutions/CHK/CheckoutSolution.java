@@ -47,7 +47,12 @@ public class CheckoutSolution {
 
         return total;
     }
+
+    private static void applyDirectDiscounts(Map<Character, Integer> items, SpecialOffer offer, int total){
+        
+    }
 }
+
 
 
 
