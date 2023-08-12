@@ -50,21 +50,33 @@ public class CheckoutSolution {
 
             var offersForItem = SPECIAL_OFFERS.getOrDefault(item, Collections.emptyList());
 
-            for (SpecialOffer offer : offersForItem) {
-                if(offer.freeItem() == null){
-                    int discount = applyDirectDiscounts(count, offer,item);
-                    total -= discount;
-                    if(discount > 0){
-                        var offerCount = count / offer.quantity();
-                        var itemsUsed = offerCount * offer.quantity();
-                        count -= itemsUsed;
-                        items.put(item, count);
-                    }
-                } else {
-                    total -= applyBundleOffers(item, items, offer);
-
+            for(SpecialOffer offer : offersForItem){
+                if(offer.freeItem() != null){
+                    var deduction = applyBundleOffers(item, items, offer);
+                    total -= deduction;
+                    count = items.get(item);
                 }
             }
+
+            for(SpecialOffer offer : offersForItem){
+                
+            }
+
+//            for (SpecialOffer offer : offersForItem) {
+//                if(offer.freeItem() == null){
+//                    int discount = applyDirectDiscounts(count, offer,item);
+//                    total -= discount;
+//                    if(discount > 0){
+//                        var offerCount = count / offer.quantity();
+//                        var itemsUsed = offerCount * offer.quantity();
+//                        count -= itemsUsed;
+//                        items.put(item, count);
+//                    }
+//                } else {
+//                    total -= applyBundleOffers(item, items, offer);
+//
+//                }
+//            }
         }
 
         return total;
@@ -91,11 +103,3 @@ public class CheckoutSolution {
         return numFreeItems * SKU_PRICES.get(offer.freeItem());
     }
 }
-
-
-
-
-
-
-
-
