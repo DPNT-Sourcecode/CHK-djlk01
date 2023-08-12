@@ -50,10 +50,16 @@ public class CheckoutSolution {
 
             var offersForItem = SPECIAL_OFFERS.getOrDefault(item, Collections.emptyList());
 
-            offersForItem.sort(Comparator.comparingInt(SpecialOffer::quantity).reversed());
+//            offersForItem.sort(Comparator.comparingInt(SpecialOffer::quantity).reversed());
 
             for (SpecialOffer offer : offersForItem) {
                 if(offer.freeItem() == null){
+                    int discount = applyDirectDiscounts(count, offer,item);
+                    total -= discount;
+                    if(discount > 0){
+                        var itemsUsed = discount / SKU_PRICES.get(item) - offer.price() / offer.quantity();
+                        count -= itemsUsed;
+                    }
                     total-= applyDirectDiscounts(count, offer,item);
                 } else {
                     total -= applyBundleOffers(item, items, offer);
@@ -69,6 +75,9 @@ public class CheckoutSolution {
 
     private static int applyDirectDiscounts(int count, SpecialOffer offer, char product) {
         var offerCount = count / offer.quantity();
+        if (offerCount == 0){
+            return 0;
+        }
         var regularPriceForOfferedItems = offerCount * offer.quantity() * SKU_PRICES.get(product);
         return regularPriceForOfferedItems - (offerCount * offer.price());
     }
@@ -89,4 +98,5 @@ public class CheckoutSolution {
         return numFreeItems * SKU_PRICES.get(offer.freeItem());
     }
 }
+
 
