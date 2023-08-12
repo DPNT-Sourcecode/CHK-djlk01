@@ -24,7 +24,7 @@ dependencies {
     testImplementation 'org.hamcrest:hamcrest-all:1.3'
     testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.24.2'
     testImplementation group: 'org.mockito', name: 'mockito-core', version: '5.4.0'
-    
+
 }
 
 application {
@@ -63,5 +63,6 @@ jacocoTestReport {
         html.required = false
     }
 }
+
 
 
