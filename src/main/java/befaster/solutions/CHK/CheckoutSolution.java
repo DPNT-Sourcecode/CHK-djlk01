@@ -1,6 +1,7 @@
 package befaster.solutions.CHK;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class CheckoutSolution {
 
@@ -47,7 +48,11 @@ public class CheckoutSolution {
             var count = itemCountEntry.getValue();
             var offersForItem = SPECIAL_OFFERS.getOrDefault(item, Collections.emptyList());
 
-            for (SpecialOffer offer : offersForItem) {
+            var sortedOffers = offersForItem.stream()
+                    .sorted(Comparator.comparingInt(SpecialOffer::quantity).reversed())
+                    .toList();
+
+            for (SpecialOffer offer : sortedOffers) {
 
 
                 if(offer.freeItem() == null){
@@ -92,9 +97,9 @@ public class CheckoutSolution {
 //
 //        return numFreeItems * SKU_PRICES.get(offer.freeItem());
 
-        while(numFreeItems > 0 && items.getOrDefault(offer.freeItem(), 0) >= numFreeItems){
-            totalDeduction += numFreeItems * SKU_PRICES.get(offer.freeItem());
-            items.put(offer.freeItem(), items.get(offer.freeItem()) - numFreeItems);
+        while(numFreeItems > 0 && items.getOrDefault(offer.freeItem(), 0) > 0){
+            totalDeduction += SKU_PRICES.get(offer.freeItem());
+            items.put(offer.freeItem(), items.get(offer.freeItem()) - 1);
             items.put(product, items.get(product) - offer.quantity());
             numFreeItems = items.get(product) / offer.quantity();
         }
@@ -108,3 +113,4 @@ public class CheckoutSolution {
         return totalDeduction;
     }
 }
+
