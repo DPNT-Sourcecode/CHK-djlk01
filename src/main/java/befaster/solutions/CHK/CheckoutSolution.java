@@ -1,5 +1,6 @@
 package befaster.solutions.CHK;
 
+import java.util.List;
 import java.util.Map;
 
 public class CheckoutSolution {
@@ -12,9 +13,10 @@ public class CheckoutSolution {
                     'C', 20,
                     'D', 15,
                     'E', 40);
-    private static final Map<Character, SpecialOffer> SPECIAL_OFFERS =
-            Map.of('A', new SpecialOffer(3, 130),
-                    'B', new SpecialOffer(2, 45));
+    private static final Map<Character, List<SpecialOffer>> SPECIAL_OFFERS =
+            Map.of('A', List.of(new SpecialOffer(3, 130),
+                            new SpecialOffer(5, 200)) ,
+                    'B', List.of(new SpecialOffer(2, 45)));
 
     public Integer checkout(String skus) {
         //input validation of skus - correct parsing
@@ -46,5 +48,6 @@ public class CheckoutSolution {
         return total;
     }
 }
+
 
 
