@@ -49,21 +49,24 @@ public class CheckoutSolution {
             total += count * SKU_PRICES.get(item);
 
             var offersForItem = SPECIAL_OFFERS.getOrDefault(item, Collections.emptyList());
+            var isBundleOfferApplied = false;
 
-            for(SpecialOffer offer : offersForItem){
-                if(offer.freeItem() != null){
+//            for(SpecialOffer offer : offersForItem){
+//                if(offer.freeItem() != null){
+//                    var deduction = applyBundleOffers(item, items, offer);
+//                    total -= deduction;
+//                    count = items.get(item);
+//                }
+//            }
+
+            for (SpecialOffer offer : offersForItem) {
+                if(offer.freeItem() == null){
                     var deduction = applyBundleOffers(item, items, offer);
                     total -= deduction;
+                    if(deduction > 0){
+                        isBundleOfferApplied = true;
+                    }
                     count = items.get(item);
-                }
-            }
-
-            for(SpecialOffer offer : offersForItem){
-                
-            }
-
-//            for (SpecialOffer offer : offersForItem) {
-//                if(offer.freeItem() == null){
 //                    int discount = applyDirectDiscounts(count, offer,item);
 //                    total -= discount;
 //                    if(discount > 0){
@@ -72,11 +75,13 @@ public class CheckoutSolution {
 //                        count -= itemsUsed;
 //                        items.put(item, count);
 //                    }
-//                } else {
-//                    total -= applyBundleOffers(item, items, offer);
-//
-//                }
-//            }
+                } else if(!isBundleOfferApplied) {
+                    var discount = applyDirectDiscounts(count, offer,item);
+                    total -= discount;
+
+                }
+            }
+            total += count * SKU_PRICES.get(item);
         }
 
         return total;
@@ -103,3 +108,4 @@ public class CheckoutSolution {
         return numFreeItems * SKU_PRICES.get(offer.freeItem());
     }
 }
+
