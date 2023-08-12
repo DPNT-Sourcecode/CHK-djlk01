@@ -50,24 +50,20 @@ public class CheckoutSolution {
 
             var offersForItem = SPECIAL_OFFERS.getOrDefault(item, Collections.emptyList());
 
-//            offersForItem.sort(Comparator.comparingInt(SpecialOffer::quantity).reversed());
-
             for (SpecialOffer offer : offersForItem) {
                 if(offer.freeItem() == null){
                     int discount = applyDirectDiscounts(count, offer,item);
                     total -= discount;
                     if(discount > 0){
-                        var itemsUsed = offer.quantity() * (discount / offer.price());
+                        var offerCount = count / offer.quantity();
+                        var itemsUsed = offerCount * offer.quantity();
                         count -= itemsUsed;
                         items.put(item, count);
                     }
-//                    total-= applyDirectDiscounts(count, offer,item);
                 } else {
                     total -= applyBundleOffers(item, items, offer);
 
                 }
-//                total-= applyDirectDiscounts(count, offer,item);
-//                total -= applyBundleOffers(item, items, offer);
             }
         }
 
@@ -84,12 +80,6 @@ public class CheckoutSolution {
     }
 
     private static int applyBundleOffers(char product, Map<Character, Integer> items, SpecialOffer offer) {
-//        if (offer.freeItem() != null) {
-//            var freeItem = offer.freeItem();
-//            var freeItemsAvailable = items.getOrDefault(freeItem, 0);
-//            var remainingItemsToChargeFor = Math.max(0 ,items.getOrDefault(freeItem, 0) - freeItemsAvailable);
-//            items.put(freeItem, remainingItemsToChargeFor);
-//        }
         var numFreeItems = items.get(product) / offer.quantity();
 
         if(numFreeItems == 0){
@@ -99,6 +89,7 @@ public class CheckoutSolution {
         return numFreeItems * SKU_PRICES.get(offer.freeItem());
     }
 }
+
 
 
 
